@@ -1,0 +1,320 @@
+[
+    {
+        "rc_id": 1,
+        "rc_name": "Genesis/Mega Drive",
+        "lb_scrapename": "Sega Genesis",
+        "should_scan": false
+    },
+    {
+        "rc_id": 2,
+        "rc_name": "Nintendo 64",
+        "lb_scrapename": "Nintendo 64",
+        "should_scan": false
+    },
+    {
+        "rc_id": 3,
+        "rc_name": "SNES/Super Famicom",
+        "lb_scrapename": "Super Nintendo Entertainment System",
+        "should_scan": false
+    },
+    {
+        "rc_id": 4,
+        "rc_name": "Game Boy",
+        "lb_scrapename": "Nintendo Game Boy",
+        "should_scan": false
+    },
+    {
+        "rc_id": 5,
+        "rc_name": "Game Boy Advance",
+        "lb_scrapename": "Nintendo Game Boy Advance",
+        "should_scan": false
+    },
+    {
+        "rc_id": 6,
+        "rc_name": "Game Boy Color",
+        "lb_scrapename": "Nintendo Game Boy Color",
+        "should_scan": false
+    },
+    {
+        "rc_id": 7,
+        "rc_name": "NES/Famicom",
+        "lb_scrapename": "Nintendo Entertainment System",
+        "should_scan": false
+    },
+    {
+        "rc_id": 8,
+        "rc_name": "PC Engine/TurboGrafx-16",
+        "lb_scrapename": "NEC TurboGrafx-16",
+        "should_scan": false
+    },
+    {
+        "rc_id": 9,
+        "rc_name": "Sega CD",
+        "lb_scrapename": "Sega CD",
+        "should_scan": false
+    },
+    {
+        "rc_id": 10,
+        "rc_name": "32X",
+        "lb_scrapename": "Sega 32X",
+        "should_scan": false
+    },
+    {
+        "rc_id": 11,
+        "rc_name": "Master System",
+        "lb_scrapename": "Sega Master System",
+        "should_scan": false
+    },
+    {
+        "rc_id": 12,
+        "rc_name": "PlayStation",
+        "lb_scrapename": "Sony Playstation",
+        "should_scan": false
+    },
+    {
+        "rc_id": 13,
+        "rc_name": "Atari Lynx",
+        "lb_scrapename": "Atari Lynx",
+        "should_scan": false
+    },
+    {
+        "rc_id": 14,
+        "rc_name": "Neo Geo Pocket",
+        "lb_scrapename": "SNK Neo Geo Pocket",
+        "should_scan": false
+    },
+    {
+        "rc_id": 15,
+        "rc_name": "Game Gear",
+        "lb_scrapename": "Sega Game Gear",
+        "should_scan": false
+    },
+    {
+        "rc_id": 16,
+        "rc_name": "GameCube",
+        "lb_scrapename": "Nintendo GameCube",
+        "should_scan": false
+    },
+    {
+        "rc_id": 17,
+        "rc_name": "Atari Jaguar",
+        "lb_scrapename": "Atari Jaguar",
+        "should_scan": false
+    },
+    {
+        "rc_id": 18,
+        "rc_name": "Nintendo DS",
+        "lb_scrapename": "Nintendo DS",
+        "should_scan": false
+    },
+    {
+        "rc_id": 21,
+        "rc_name": "PlayStation 2",
+        "lb_scrapename": "Sony Playstation 2",
+        "should_scan": false
+    },
+    {
+        "rc_id": 23,
+        "rc_name": "Magnavox Odyssey 2",
+        "lb_scrapename": "Magnavox Odyssey 2",
+        "should_scan": false
+    },
+    {
+        "rc_id": 24,
+        "rc_name": "Pokemon Mini",
+        "lb_scrapename": "Nintendo Pokemon Mini",
+        "should_scan": false
+    },
+    {
+        "rc_id": 25,
+        "rc_name": "Atari 2600",
+        "lb_scrapename": "Atari 2600",
+        "should_scan": false
+    },
+    {
+        "rc_id": 27,
+        "rc_name": "Arcade",
+        "lb_scrapename": "Arcade",
+        "should_scan": false
+    },
+    {
+        "rc_id": 28,
+        "rc_name": "Virtual Boy",
+        "lb_scrapename": "Nintendo Virtual Boy",
+        "should_scan": false
+    },
+    {
+        "rc_id": 29,
+        "rc_name": "MSX",
+        "lb_scrapename": "Microsoft MSX",
+        "should_scan": false
+    },
+    {
+        "rc_id": 33,
+        "rc_name": "SG-1000",
+        "lb_scrapename": "Sega SG-1000",
+        "should_scan": false
+    },
+    {
+        "rc_id": 37,
+        "rc_name": "Amstrad CPC",
+        "lb_scrapename": "Amstrad CPC",
+        "should_scan": false
+    },
+    {
+        "rc_id": 38,
+        "rc_name": "Apple II",
+        "lb_scrapename": "Apple II",
+        "should_scan": false
+    },
+    {
+        "rc_id": 39,
+        "rc_name": "Saturn",
+        "lb_scrapename": "Sega Saturn",
+        "should_scan": false
+    },
+    {
+        "rc_id": 40,
+        "rc_name": "Dreamcast",
+        "lb_scrapename": "Sega Dreamcast",
+        "should_scan": false
+    },
+    {
+        "rc_id": 41,
+        "rc_name": "PlayStation Portable",
+        "lb_scrapename": "Sony PSP",
+        "should_scan": false
+    },
+    {
+        "rc_id": 43,
+        "rc_name": "3DO Interactive Multiplayer",
+        "lb_scrapename": "3DO Interactive Multiplayer",
+        "should_scan": false
+    },
+    {
+        "rc_id": 44,
+        "rc_name": "ColecoVision",
+        "lb_scrapename": "ColecoVision",
+        "should_scan": false
+    },
+    {
+        "rc_id": 45,
+        "rc_name": "Intellivision",
+        "lb_scrapename": "Mattel Intellivision",
+        "should_scan": false
+    },
+    {
+        "rc_id": 46,
+        "rc_name": "Vectrex",
+        "lb_scrapename": "GCE Vectrex",
+        "should_scan": false
+    },
+    {
+        "rc_id": 47,
+        "rc_name": "PC-8000/8800",
+        "lb_scrapename": "NEC PC-8801",
+        "should_scan": false
+    },
+    {
+        "rc_id": 49,
+        "rc_name": "PC-FX",
+        "lb_scrapename": "NEC PC-FX",
+        "should_scan": false
+    },
+    {
+        "rc_id": 51,
+        "rc_name": "Atari 7800",
+        "lb_scrapename": "Atari 7800",
+        "should_scan": false
+    },
+    {
+        "rc_id": 53,
+        "rc_name": "WonderSwan",
+        "lb_scrapename": "WonderSwan",
+        "should_scan": false
+    },
+    {
+        "rc_id": 56,
+        "rc_name": "Neo Geo CD",
+        "lb_scrapename": "SNK Neo Geo CD",
+        "should_scan": false
+    },
+    {
+        "rc_id": 57,
+        "rc_name": "Fairchild Channel F",
+        "lb_scrapename": "Fairchild Channel F",
+        "should_scan": false
+    },
+    {
+        "rc_id": 63,
+        "rc_name": "Watara Supervision",
+        "lb_scrapename": "Watara Supervision",
+        "should_scan": false
+    },
+    {
+        "rc_id": 69,
+        "rc_name": "Mega Duck",
+        "lb_scrapename": "Mega Duck",
+        "should_scan": false
+    },
+    {
+        "rc_id": 71,
+        "rc_name": "Arduboy",
+        "lb_scrapename": "",
+        "should_scan": false
+    },
+    {
+        "rc_id": 72,
+        "rc_name": "WASM-4",
+        "lb_scrapename": "",
+        "should_scan": false
+    },
+    {
+        "rc_id": 73,
+        "rc_name": "Arcadia 2001",
+        "lb_scrapename": "Emerson Arcadia 2001",
+        "should_scan": false
+    },
+    {
+        "rc_id": 74,
+        "rc_name": "Interton VC 4000",
+        "lb_scrapename": "Interton VC 4000",
+        "should_scan": false
+    },
+    {
+        "rc_id": 75,
+        "rc_name": "Elektor TV Games Computer",
+        "lb_scrapename": "",
+        "should_scan": false
+    },
+    {
+        "rc_id": 76,
+        "rc_name": "PC Engine CD/TurboGrafx-CD",
+        "lb_scrapename": "NEC TurboGrafx-CD",
+        "should_scan": false
+    },
+    {
+        "rc_id": 77,
+        "rc_name": "Atari Jaguar CD",
+        "lb_scrapename": "Atari Jaguar CD",
+        "should_scan": false
+    },
+    {
+        "rc_id": 78,
+        "rc_name": "Nintendo DSi",
+        "lb_scrapename": "Nintendo DS",
+        "should_scan": false
+    },
+    {
+        "rc_id": 80,
+        "rc_name": "Uzebox",
+        "lb_scrapename": "",
+        "should_scan": false
+    },
+    {
+        "rc_id": 102,
+        "rc_name": "Standalone",
+        "lb_scrapename": "",
+        "should_scan": false
+    }
+]

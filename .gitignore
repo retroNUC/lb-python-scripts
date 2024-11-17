@@ -1,0 +1,12 @@
+# Python generated files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Development files
+dev/
+
+# User generated files
+cache/
+data/
+hashes/
