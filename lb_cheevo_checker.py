@@ -202,8 +202,14 @@ for c in consoles:
         c_id = c_dict['ID']
         a_path = a.get('ApplicationPath')
 
+        if not a_path:
+            log.debug(f"Skipping, AA entry had no ApplicationPath defined")
+            continue
+
+        a_path = os.path.normpath(a_path)
+
         if a_path.casefold().endswith('.m3u'):
-            log.debug(f"Skipping AA due to .m3u extension")
+            log.debug(f"Skipping, AA entry is .m3u, not supported by script yet")
             continue
 
         log.debug(f"Checking if AA entry is same file as main game")
@@ -211,8 +217,12 @@ for c in consoles:
             if (g_i := c['lb_game_ids'].get(a_gid)):
                 g = c['lb_data']['Game'][g_i]
                 if g.get('ApplicationPath') == a_path:
-                    log.debug(f"Skipping AA because it's same file as main game")
+                    log.debug(f"Skipping, AA entry is same ApplicationPath as main game")
                     continue
+
+        # If relative path, append LB main directory
+        if not os.path.isabs(a_path):
+            a_path = os.path.join(LB.lb_dir, a_path)
 
         # If it doesn't exist in the cache, generate the hash
         log.debug(f"Checking if app path already exists in cached hashes")
