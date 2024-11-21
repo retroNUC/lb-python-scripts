@@ -27,8 +27,6 @@ def etree_to_dict(t):
 
 ################################################################################
 
-lb_dir = 'Test'
-
 def init(directory: str):
     """
     Initializes the module by setting the main LaunchBox directory.

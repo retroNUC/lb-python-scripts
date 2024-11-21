@@ -75,8 +75,7 @@ LB.init(config['LAUNCHBOX']['directory'])
 RC_API.init(config['RETROACHIEVEMENTS']['username'], config['RETROACHIEVEMENTS']['api_key'])
 
 rahasher_path = os.path.join(LB.lb_dir, 'ThirdParty', 'RetroAchievements', 'RAHasher.exe')
-# TODO: Pull this properly from Emulators.xml in LB data
-dolphintool_path = ''
+dolphintool_path = config.get('RAHASHER', 'doltool_path', fallback = '')
 RC_HASH.init(rahasher_path, dolphintool_path)
 
 # Set up cache for API requests
