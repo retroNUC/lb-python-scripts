@@ -3,6 +3,14 @@ import logging as log
 import os.path
 import xml.etree.ElementTree as ET
 
+################################################################################
+
+main_directory = ''
+platforms = {}
+gamedata = {}
+
+################################################################################
+
 def etree_to_dict(t):
     """https://stackoverflow.com/questions/2148119/how-to-convert-an-xml-string-to-a-dictionary"""
 
@@ -40,37 +48,93 @@ def init(directory: str):
 
     # TODO: Validate and format the directory
 
-    global lb_dir
-    lb_dir = directory
+    global main_directory
+    main_directory = directory
 
 ################################################################################
 
-def get_platform_data(platform_name: str) -> dict:
-    '''
+def load_platform_list() -> int:
 
     '''
-    found_platform = False
+    Loads XML data from Platforms.xml and stores in module as dictionary.
+    '''
+    global main_directory
+    if main_directory == '':
+        log.error(f"Main LaunchBox directory is not set, has the module been initialized?")
+        return 1
+    
+    global platforms
 
-    # Load platform list, check both 'Name' and 'ScrapeAs'
-    xml_tree = ET.parse(os.path.join(lb_dir, "Data", "Platforms.xml"))
-    for p in xml_tree.getroot().findall('Platform'):
-        if (p.findtext('Name')) == platform_name:
-            found_platform = True
-            break
-        elif (p.findtext('ScrapeAs')) == platform_name:
-            platform_name = p.findtext('Name')
-            found_platform = True
-            break
+    if platforms:
+        log.debug(f"Platform data is already loaded")
+        return 0
 
-    if not found_platform:
-        print(f"ERROR: Could not find platform matching '{platform_name}' in LB Platforms.xml")
+    xml_tree = ET.parse(os.path.join(main_directory, "Data", "Platforms.xml"))
+    xml_dict = etree_to_dict(xml_tree.getroot())
+
+    # Restructure to dictionary
+    if (p_list := xml_dict['LaunchBox'].get('Platform')):
+        for p in p_list:
+            if (p_name := p.get('Name')):
+                platforms[p_name] = p
+
+    return 0
+
+################################################################################
+
+def load_game_data(platform: str) -> int:
+    """
+    Loads game data for a LaunchBox platform name and stores in module as a 
+    dictionary.
+
+    Platform name provided has to be the exact name, not the 'ScrapeAs' name.
+    
+    Args:
+        platform (str): Name of LaunchBox platform to load
+    """
+    global gamedata
+    if gamedata.get(platform):
+        log.debug(f"Game data for this platform is already loaded")
+        return 0
+
+    gd_path = os.path.join(main_directory, "Data", "Platforms", platform + ".xml")
+    xml_tree = ET.parse(gd_path)
+    xml_dict = etree_to_dict(xml_tree.getroot())["LaunchBox"]
+
+    gamedata[platform] = xml_dict
+
+    return 0
+
+################################################################################
+
+def get_game_data(platform: str) -> dict:
+    '''
+    Loads and returns a dictionary containing all game entries for a LB platform.
+    '''
+
+    global platforms
+    global gamedata
+
+    if not platforms:
+        load_platform_list()
+
+    found = False
+
+    if platforms.get(platform):
+        found = True
+    else:
+        for p_name, p_data in platforms.items():
+            if p_data.get('ScrapeAs') == platform:
+                platform = p_name
+                found = True
+                break
+
+    if not found:
+        log.error(f"ERROR: Could not find platform matching '{platform}' in LB Platforms.xml")
         return None
     
-    p_path = os.path.join(lb_dir, "Data", "Platforms", platform_name + ".xml")
-    log.debug(f"Parsing element tree")
-    p_xml = ET.parse(p_path)
-    log.debug(f"Converting to dictionary")
-    p_dict = etree_to_dict(p_xml.getroot())["LaunchBox"]
+    if not gamedata.get(platform):
+        load_game_data(platform)
 
-    return p_dict
+    return gamedata[platform]
     

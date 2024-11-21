@@ -74,7 +74,7 @@ log.basicConfig(level=log.WARNING)
 LB.init(config['LAUNCHBOX']['directory'])
 RC_API.init(config['RETROACHIEVEMENTS']['username'], config['RETROACHIEVEMENTS']['api_key'])
 
-rahasher_path = os.path.join(LB.lb_dir, 'ThirdParty', 'RetroAchievements', 'RAHasher.exe')
+rahasher_path = os.path.join(LB.main_directory, 'ThirdParty', 'RetroAchievements', 'RAHasher.exe')
 dolphintool_path = config.get('RAHASHER', 'doltool_path', fallback = '')
 RC_HASH.init(rahasher_path, dolphintool_path)
 
@@ -146,19 +146,21 @@ for c in consoles:
 
     # Load LB platform data
     c_name = c['lb_scrapename']
-    c_data = LB.get_platform_data(c_name)
-    if c_data == None:
+    pd = LB.get_game_data(c_name)
+
+    if pd == None:
+        log.error(f"Could not find LaunchBox platform data to pair with '{c_name}', so excluding.")
         c['should_scan'] = False
         continue
 
     # Stub entries if certain data doesn't exist
-    if c_data.get('Game') == None:
-        c_data['Game'] = []
-    if c_data.get('AdditionalApplication') == None:
-        c_data['AdditionalApplication'] = []
+    if pd.get('Game') == None:
+        pd['Game'] = []
+    if pd.get('AdditionalApplication') == None:
+        pd['AdditionalApplication'] = []
 
-    c['lb_data'] = c_data
-    print(f"  Loaded '{c_name}' game data - {len(c_data['Game'])} Game entries, {len(c_data['AdditionalApplication'])} Additional Application entries")
+    c['lb_data'] = pd
+    print(f"  Loaded '{c_name}' game data - {len(pd['Game'])} Game entries, {len(pd['AdditionalApplication'])} Additional Application entries")
 
     c['lb_game_ids'] = {}
     c['lb_game_hashes'] = {}
@@ -221,7 +223,7 @@ for c in consoles:
 
         # If relative path, append LB main directory
         if not os.path.isabs(a_path):
-            a_path = os.path.join(LB.lb_dir, a_path)
+            a_path = os.path.join(LB.main_directory, a_path)
 
         # If it doesn't exist in the cache, generate the hash
         log.debug(f"Checking if app path already exists in cached hashes")
