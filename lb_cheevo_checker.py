@@ -200,9 +200,9 @@ for c in consoles:
         log.debug(f"Processing AdditionalApplication entry - {a.get('ApplicationPath')}")
         c_dict = next(i for i in rc_consoles if i["Name"] == c['rc_name'])
         c_id = c_dict['ID']
-        a_apppath = a.get('ApplicationPath')
+        a_path = a.get('ApplicationPath')
 
-        if a_apppath.casefold().endswith('.m3u'):
+        if a_path.casefold().endswith('.m3u'):
             log.debug(f"Skipping AA due to .m3u extension")
             continue
 
@@ -210,26 +210,34 @@ for c in consoles:
         if (a_gid := a.get('GameID')):
             if (g_i := c['lb_game_ids'].get(a_gid)):
                 g = c['lb_data']['Game'][g_i]
-                if g.get('ApplicationPath') == a_apppath:
+                if g.get('ApplicationPath') == a_path:
                     log.debug(f"Skipping AA because it's same file as main game")
                     continue
 
         # If it doesn't exist in the cache, generate the hash
         log.debug(f"Checking if app path already exists in cached hashes")
-        if a_apppath not in c['lb_extra_hashes']:
+        if a_path not in c['lb_extra_hashes']:
             log.debug(f"App path not found in cached data, going to perform hash")
-            a_apppath_local = a_apppath.replace('D:\\', 'X:\\emulation\\')
-            h = RC_HASH.calculate_hash(c_id, a_apppath_local)
-            print(f"  New Hash: {a_apppath_local} ({h})")
+
+            # If set in config, replace parts of app path
+            # TODO: Work around normpath stripping trailing slash
+            a_path_local = os.path.normpath(a_path)
+            a_path_from = config.get('LAUNCHBOX', 'apppath_replace_from', fallback = None)
+            a_path_to = config.get('LAUNCHBOX', 'apppath_replace_to', fallback = None)
+            if a_path_from and a_path_to:
+                a_path_local = a_path_local.replace(a_path_from, a_path_to)
+            
+            h = RC_HASH.calculate_hash(c_id, a_path_local)
+            print(f"  New Hash: {a_path_local} ({h})")
             if re.findall(r"([a-fA-F\d]{32})", str(h)):
-                c['lb_extra_hashes'][a_apppath] = h
+                c['lb_extra_hashes'][a_path] = h
             else:
                 print(f"  WARNING: Hash rejected by regex: {a.get('Title')} ({h})")
         else:
-            log.debug(f"App path successfully found in cached hashes ({c['lb_extra_hashes'][a_apppath]})")
+            log.debug(f"App path successfully found in cached hashes ({c['lb_extra_hashes'][a_path]})")
 
         # Add it to the main hash lookup table
-        if (h := c['lb_extra_hashes'].get(a_apppath)):
+        if (h := c['lb_extra_hashes'].get(a_path)):
             h = h.casefold()
             log.debug(f"Checking if hash already exists in cross-platform lookup")
             if h not in lb_hashes:
