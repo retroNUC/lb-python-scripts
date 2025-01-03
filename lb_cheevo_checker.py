@@ -93,6 +93,8 @@ hashes_path = os.path.join(os.getcwd(), 'hashes')
 if not os.path.exists(hashes_path):
     os.makedirs(hashes_path)
 
+
+
 print("Requesting RetroAchievements API data...")
 
 rc_consoles = RC_API.get_console_ids()
@@ -134,9 +136,14 @@ for c in consoles:
             json.dump(c['rc_games'], f, ensure_ascii = False, indent = 4)
 
 print()
+
+
+
 print("Loading LaunchBox data...")
 
 lb_hashes = []
+"""List of 'RetroAchievementsHash' values across all game/application entries and platforms."""
+
 for c in consoles:
 
     if not c['should_scan']:
@@ -184,7 +191,7 @@ for c in consoles:
                 if g_h not in lb_hashes:
                     lb_hashes.append(g_h)
                 else:
-                    log.warning(f"Hash already exists in lb_hashes? - {g.get('Title')} ({g_h})")
+                    log.warning(f"Hash for {g.get('Title')} ({g_h}) already exists in global LaunchBox hash list")
             else:
                 log.warning(f"Hash appears to be invalid? - {g.get('Title')} ({g_h})")
 
@@ -261,8 +268,9 @@ for c in consoles:
     with open(h_file, "w") as f:
         json.dump(c['lb_extra_hashes'], f, ensure_ascii = False, indent = 4)
 
-
 print()
+
+
 
 # Compare
 for c in consoles:
@@ -274,14 +282,18 @@ for c in consoles:
     for g in c['rc_games']:
         if (g_hashes := g.get('Hashes')):
 
-            found = False
+            lb_matching_hash = ''
 
+            # Does any hashes for this RA game exist in the global LB hash list?
             for h_rc in g_hashes:
                 if h_rc.casefold() in lb_hashes:
-                    found = True
+                    lb_matching_hash = h_rc.casefold()
                     break
 
-            if not found:
+            # TODO: Look up LB game from hash, see if RetroAchievementsID field is set and correct
+
+            # If hash wasn't found, output information about missing RA game
+            if lb_matching_hash == '':
                 g_name = g.get('Title')
 
                 skip_data = [ {'config': 'skip_demo',       'string': '~Demo~'},

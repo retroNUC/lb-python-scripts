@@ -7,7 +7,9 @@ import xml.etree.ElementTree as ET
 
 main_directory = ''
 platforms = {}
+"""Dictionary storing data about available LB platforms, loaded from Platforms.xml, with 'Name' as key."""
 gamedata = {}
+"""Dictionary storing data about games/apps/etc for each LB platform, loaded from platform XML files, with LB platform name as key."""
 
 ################################################################################
 
