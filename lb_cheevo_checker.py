@@ -216,9 +216,39 @@ for c in consoles:
 
         a_path = os.path.normpath(a_path)
 
-        if a_path.casefold().endswith('.m3u'):
-            log.debug(f"Skipping, AA entry is .m3u, not supported by script yet")
-            continue
+        # If non-absolute path, append LB main directory
+        if not os.path.isabs(a_path):
+            a_path = os.path.join(LB.main_directory, a_path)
+
+        # If set in config, replace parts of app path
+        # TODO: Work around normpath stripping trailing slash
+        a_path_local = a_path
+        a_path_from = config.get('LAUNCHBOX', 'apppath_replace_from', fallback = None)
+        a_path_to = config.get('LAUNCHBOX', 'apppath_replace_to', fallback = None)
+        if a_path_from and a_path_to:
+            a_path_local = a_path_local.replace(a_path_from, a_path_to)
+
+        # For M3U playlists as AdditonalApplications, hash the first file listed within
+        if a_path_local.casefold().endswith('.m3u'):
+            log.debug(f"AA entry is playlist file: {a_path_local}")
+
+            if not os.path.exists(a_path_local):
+                log.warning(f"AA playlist file does not exist: {a_path_local}")
+                continue
+
+            with open(a_path_local) as f:
+                m3u_first = f.readline().rstrip()
+
+            if m3u_first == "":
+                log.warning(f"AA playlist file entries could not be read: {a_path_local}")
+                continue
+
+            # Playlist entries can be non-absolute as well
+            m3u_first = os.path.normpath(m3u_first)
+            if not os.path.isabs(m3u_first):
+                m3u_first = os.path.join(os.path.split(a_path_local)[0], m3u_first)
+
+            a_path_local = m3u_first
 
         log.debug(f"Checking if AA entry is same file as main game")
         if (a_gid := a.get('GameID')):
@@ -228,22 +258,10 @@ for c in consoles:
                     log.debug(f"Skipping, AA entry is same ApplicationPath as main game")
                     continue
 
-        # If relative path, append LB main directory
-        if not os.path.isabs(a_path):
-            a_path = os.path.join(LB.main_directory, a_path)
-
         # If it doesn't exist in the cache, generate the hash
         log.debug(f"Checking if app path already exists in cached hashes")
         if a_path not in c['lb_extra_hashes']:
             log.debug(f"App path not found in cached data, going to perform hash")
-
-            # If set in config, replace parts of app path
-            # TODO: Work around normpath stripping trailing slash
-            a_path_local = os.path.normpath(a_path)
-            a_path_from = config.get('LAUNCHBOX', 'apppath_replace_from', fallback = None)
-            a_path_to = config.get('LAUNCHBOX', 'apppath_replace_to', fallback = None)
-            if a_path_from and a_path_to:
-                a_path_local = a_path_local.replace(a_path_from, a_path_to)
             
             h = RC_HASH.calculate_hash(c_id, a_path_local)
             print(f"  New Hash: {a_path_local} ({h})")
